@@ -565,27 +565,28 @@ class mDB
 
         $config = self::$config;
 
-        $params = [];
 
-        if (!empty($config['username'])) {
-            $params = [
-                'username' => $config['username'],
-                'password' => $config['password'] ?? '',
-                'authSource' => $config['authSource'] ?? 'admin',
-                'connectTimeoutMS' => $config['connectTimeoutMS'] ?? 360000,
-                'socketTimeoutMS' =>  $config['socketTimeoutMS'] ?? 360000,
-                'poolSize' => $config['poolSize'] ?? 1000,
-                'ssl' => $config['ssl'] ?? false,
-            ];
-        }
+        $params = [
+            'username' => $config['username'],
+            'password' => $config['password'] ?? '',
+            'authSource' => $config['authSource'] ?? 'admin',
+            'connectTimeoutMS' => $config['connectTimeoutMS'] ?? 360000,
+            'socketTimeoutMS' =>  $config['socketTimeoutMS'] ?? 360000,
+            'poolSize' => $config['poolSize'] ?? 1000,
+            'ssl' => $config['ssl'] ?? false,
+        ];
+
 
         $host = $config['host'] ?? 'localhost';
         $port = $config['port'] ?? 27017;
         $server = "mongodb://$host:$port";
 
+
+
         self::$client = new Client($server, $params);
 
-        self::$database = self::$client[$config['database'] ?? 'test'];
+        $db = $config['database'] ?? 'test';
+        self::$database = self::$client->$db;
     }
 
     public function isValid($value)
