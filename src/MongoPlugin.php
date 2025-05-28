@@ -41,14 +41,12 @@ class MongoPlugin
 
         mDB::setConfig($config);
 
-        $f3->set('mdb', fn(string $collection) => mDB::collection($collection));
-        $f3->set('_mdb', fn(string $collection) => mDB::_collection($collection));
+        $f3->set('mdb', mDB::class);
     }
 }
 
 
 /**
- * @method CollectionEvents mdb(string $collection)
- * @method Collection _mdb(string $collection)
+ * @property \F3Mongo\mDB $mdb
  */
 interface MongoAwareF3 {}

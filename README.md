@@ -46,10 +46,26 @@ $users = $f3->mdb('users')->find(['active' => true]);
 
 ## Подключение в F3
 
+После регистрации плагина:
+
 ```php
-$f3->set('mdb', fn(string $collection) => mDB::collection($collection));
-$f3->set('_mdb', fn(string $collection) => mDB::_collection($collection));
+\F3Mongo\MongoPlugin::register([
+    'host' => 'localhost',
+    'port' => 27017,
+    'database' => 'your_db',
+]);
 ```
+
+Вы получите доступ к Mongo через `$f3->mdb`:
+
+- `$f3->mdb->collection('users')` — возвращает обёртку `CollectionEvents` с логикой:
+
+  - автоматическое исключение soft-deleted (`deleted_at`)
+  - события `insert` / `update` (если есть слушатели)
+  - auto timestamps (`created_at`, `updated_at`)
+  - методы: `find()`, `findOne()`, `updateOne()`, `insertOne()`, `aggregate()` и др.
+
+- `$f3->mdb->_collection('users')` — возвращает оригинальный объект `\MongoDB\Collection` без каких-либо обработчиков.
 
 ## Подсказки в IDE
 
