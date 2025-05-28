@@ -1,0 +1,16 @@
+{
+    "name": "antonchaikin/f3-mongo",
+    "description": "Fat-Free Framework plugin for MongoDB with event hooks, soft deletes, and auto-timestamps.",
+    "type": "library",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "F3Mongo\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^7.4 || ^8.0",
+        "bcosca/fatfree": "*",
+        "mongodb/mongodb": "*"
+    }
+}
