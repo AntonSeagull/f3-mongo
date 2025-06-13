@@ -7,6 +7,7 @@ namespace F3Mongo;
 use \MongoDB\Client;
 use \MongoDB\Collection;
 use \MongoDB\Driver\WriteConcern;
+use Traversable;
 
 class CollectionEvents
 {
@@ -673,6 +674,11 @@ class mDB
             return $data;
         }
 
+
+        if (!(is_object($data) || is_array($data) || $data instanceof Traversable)) {
+            return $data;
+        }
+
         foreach ($data as $key => $value) {
             if ($value instanceof \MongoDB\Model\BSONArray) {
                 $data[$key] = self::replaceObjectIdsToString($value->getArrayCopy());
@@ -692,6 +698,11 @@ class mDB
     public static function replaceStringToObjectIds($data)
     {
         if (!$data) {
+            return $data;
+        }
+
+
+        if (!(is_object($data) || is_array($data) || $data instanceof Traversable)) {
             return $data;
         }
 
